@@ -3,7 +3,7 @@ package domain;
 import java.sql.Date;
 import java.util.UUID;
 
-public class Lending {
+public class Loan {
 	private UUID id;
 	private Date lend_date;
 	private UUID client_id;
@@ -12,10 +12,10 @@ public class Lending {
 	private int status;
 	private Date returned_date;
 	
-	public Lending(Date lend_date, Client client, Employee employee, Date return_date){
+	public Loan(Date lend_date, Client client, Librarian librarian, Date return_date){
 		this.lend_date = lend_date;
 		this.client_id = client.getId();
-		this.employee_id = employee.getId();
+		this.employee_id = librarian.getId();
 		this.return_date = return_date;
 	}
 

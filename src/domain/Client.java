@@ -2,12 +2,13 @@ package domain;
 
 import java.util.UUID;
 
-public class Client {
+public class Client extends Person{
 	private UUID id;
 	private UUID person_id;
 	
-	public Client(Person person){
-		this.person_id = person.getId();
+	public Client(String name, String email, String phone){
+		super(name, email, phone);
+		this.person_id = super.getId();
 	}
 
 	public UUID getId() {

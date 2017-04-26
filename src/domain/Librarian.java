@@ -2,16 +2,17 @@ package domain;
 
 import java.util.UUID;
 
-public class Employee {
+public class Librarian extends Person{
 	private UUID id;
 	private String cpf;
 	private String role;
 	private UUID person_id;
 	
-	public Employee(String cpf, String role, Person person){
+	public Librarian(String name, String email, String phone, String cpf, String role){
+		super(name, email, phone);
 		this.cpf = cpf;
 		this.role = role;
-		this.person_id = person.getId();
+		this.person_id = super.getId();
 	}
 
 	public UUID getId() {
