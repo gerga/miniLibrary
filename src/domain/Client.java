@@ -8,6 +8,7 @@ public class Client extends Person{
 	
 	public Client(String name, String email, String phone){
 		super(name, email, phone);
+		this.id = UUID.randomUUID();
 		this.person_id = super.getId();
 	}
 
@@ -20,7 +21,7 @@ public class Client extends Person{
 	}
 
 	public UUID getPerson_id() {
-		return person_id;
+		return this.person_id;
 	}
 
 	public void setPerson_id(UUID person_id) {

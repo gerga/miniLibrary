@@ -5,13 +5,12 @@ import java.util.UUID;
 public class Librarian extends Person{
 	private UUID id;
 	private String cpf;
-	private String role;
 	private UUID person_id;
 	
-	public Librarian(String name, String email, String phone, String cpf, String role){
+	public Librarian(String name, String email, String phone, String cpf){
 		super(name, email, phone);
+		this.id = UUID.randomUUID();
 		this.cpf = cpf;
-		this.role = role;
 		this.person_id = super.getId();
 	}
 
@@ -29,14 +28,6 @@ public class Librarian extends Person{
 
 	public void setCpf(String cpf) {
 		this.cpf = cpf;
-	}
-
-	public String getRole() {
-		return role;
-	}
-
-	public void setRole(String role) {
-		this.role = role;
 	}
 
 	public UUID getPerson_id() {

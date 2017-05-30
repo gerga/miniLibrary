@@ -9,6 +9,7 @@ public class Person {
 	private String phone;
 	
 	public Person(String name, String email, String phone){
+		this.id = UUID.randomUUID();
 		this.name = name;
 		this.email = email;
 		this.phone = phone;

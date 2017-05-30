@@ -34,6 +34,17 @@ public class Book {
 		}
 	}
 	
+	public Book(String name, String author, String isbn, int year, int edition, int pages, String genre_id, int status){
+		this.name = name;
+		this.author = author;
+		this.isbn = isbn;
+		this.year = year;
+		this.edition = edition;
+		this.pages = pages;
+		this.genre_id = UUID.fromString(genre_id);
+		this.status = status;
+	}
+	
 	public Book(String name, String author, String isbn, int year, int edition, int pages, Genre genre, BookStatus status){
 		this.name = name;
 		this.author = author;
@@ -43,6 +54,18 @@ public class Book {
 		this.pages = pages;
 		this.genre_id = genre.getId();
 		this.status = status.getStatus();
+	}
+	
+	public void to_reserve(Client client, Librarian librarian){
+		Booking booking = new Booking(client, this, librarian);
+		this.status = BookStatus.reserved.getStatus();
+		System.out.println("Livro reservado");
+	}
+	
+	public void return_reservation(){
+		// Buscar por reservas desse livro
+		this.status = BookStatus.available.getStatus();
+		System.out.println("Reserva desfeita");
 	}
 	
 	public UUID getId() {

@@ -2,6 +2,8 @@ package domain;
 
 import java.util.UUID;
 
+import domain.Book.BookStatus;
+
 public class LoanBook {
 	private UUID id;
 	private UUID book_id;
@@ -10,6 +12,7 @@ public class LoanBook {
 	public LoanBook(Book book, Loan loan){
 		this.book_id = book.getId();
 		this.loan_id = loan.getId();
+		book.setStatus(BookStatus.loaned.getStatus());
 	}
 
 	public UUID getId() {

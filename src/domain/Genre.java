@@ -5,6 +5,11 @@ public class Genre {
 	private UUID id;
 	private String name;
 	
+	@Override
+	public String toString() {
+		return this.getName();
+	}
+	
 	public Genre(String name){
 		this.name = name;
 	}

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+
+<AnchorPane xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.MainAppController">
+   <children>
+      <Pane layoutY="-25.0" prefHeight="530.0" prefWidth="776.0">
+         <children>
+            <MenuBar layoutY="25.0">
+              <menus>
+                <Menu mnemonicParsing="false" text="Arquivo">
+                  <items>
+                    <MenuItem mnemonicParsing="false" text="Fechar" />
+                  </items>
+                </Menu>
+                <Menu mnemonicParsing="false" text="Novo">
+                  <items>
+                    <MenuItem mnemonicParsing="false" onAction="#create_genre" text="Gênero" />
+                        <MenuItem mnemonicParsing="false" onAction="#create_book" text="Livro" />
+                        <MenuItem mnemonicParsing="false" onAction="#create_client" text="Cliente" />
+                        <MenuItem mnemonicParsing="false" onAction="#create_librarian" text="Bibliotecário" />
+                  </items>
+                </Menu>
+                <Menu mnemonicParsing="false" text="Pesquisar">
+                  <items>
+                    <MenuItem mnemonicParsing="false" onAction="#open_book_search" text="Livros" />
+                  </items>
+                </Menu>
+              </menus>
+            </MenuBar>
+         </children>
+      </Pane>
+   </children>
+</AnchorPane>
