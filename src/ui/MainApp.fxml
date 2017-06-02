@@ -23,11 +23,13 @@
                         <MenuItem mnemonicParsing="false" onAction="#create_book" text="Livro" />
                         <MenuItem mnemonicParsing="false" onAction="#create_client" text="Cliente" />
                         <MenuItem mnemonicParsing="false" onAction="#create_librarian" text="Bibliotecário" />
+                        <MenuItem mnemonicParsing="false" onAction="#create_loan" text="Empréstimo" />
                   </items>
                 </Menu>
                 <Menu mnemonicParsing="false" text="Pesquisar">
                   <items>
                     <MenuItem mnemonicParsing="false" onAction="#open_book_search" text="Livros" />
+                        <MenuItem mnemonicParsing="false" onAction="#search_activated_loans" text="Empréstimos ativos" />
                   </items>
                 </Menu>
               </menus>

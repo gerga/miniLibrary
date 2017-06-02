@@ -20,6 +20,45 @@ public class BookDao {
 		this.connection = new ConnectionFactory().getConnection();
 	}
 	
+	public void update_status(Book book){
+		String sql = "UPDATE book set status = ? WHERE id = ?";
+		PreparedStatement ps;
+		try {
+			ps = this.connection.prepareStatement(sql);
+			// Use 'setObject' to JDBC recognize UUID type
+			ps.setObject(1, book.getStatus());
+			ps.setObject(2, book.getId());
+			ps.execute();
+			ps.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	public List<Book> find_available(){
+		String sql = "SELECT * FROM book where status = 0";
+		PreparedStatement ps;
+		try{
+			ps = this.connection.prepareStatement(sql);
+			ResultSet rs = ps.executeQuery();
+			ObservableList<Book> books = FXCollections.observableArrayList();
+			while (rs.next()){
+				Book book = new Book(rs.getString("name"), rs.getString("author"), rs.getString("isbn"),
+									 rs.getInt("year"), rs.getInt("edition"), rs.getInt("pages"), rs.getString("genre_id"),
+									 rs.getInt("status"));
+				book.setId(UUID.fromString(rs.getString("id")));
+				books.add(book);
+			}
+			rs.close();
+			ps.close();
+			return books;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
 	public List<Book> find_all(){
 		String sql = "SELECT * FROM book";
 		PreparedStatement ps;
@@ -28,7 +67,6 @@ public class BookDao {
 			ResultSet rs = ps.executeQuery();
 			ObservableList<Book> books = FXCollections.observableArrayList();
 			while (rs.next()){
-				System.out.println(rs.getObject("genre_id"));
 				Book book = new Book(rs.getString("name"), rs.getString("author"), rs.getString("isbn"),
 									 rs.getInt("year"), rs.getInt("edition"), rs.getInt("pages"), rs.getString("genre_id"),
 									 rs.getInt("status"));
@@ -44,7 +82,8 @@ public class BookDao {
 	}
 	
 	public void insert(Book book){
-		String sql = "INSERT INTO book(id, name, author, isbn, year, edition, pages, genre_id, status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+		String sql = ("INSERT INTO book(id, code, name, author, isbn, year, edition, pages, genre_id, status) " + 
+				      "VALUES (?, (SELECT IFNULL(MAX(code), 0) + 1 FROM book), ?, ?, ?, ?, ?, ?, ?, ?)");
 		PreparedStatement ps;
 		try {
 			ps = this.connection.prepareStatement(sql);

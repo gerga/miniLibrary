@@ -24,6 +24,12 @@ public class ClientEditorController {
 	@FXML
 	private TextField phone_field;
 	
+	private void clear(){
+		this.name_field.setText("");
+		this.email_field.setText("");
+		this.phone_field.setText("");
+	}
+	
 	@FXML
 	void cancel(ActionEvent event) {
 		((Node) (event.getSource())).getScene().getWindow().hide();
@@ -42,6 +48,6 @@ public class ClientEditorController {
 		ClientDao cd = new ClientDao();
 		cd.insert(client);
 		alert.showAndWait();
-		Platform.exit();
+		clear();
 	}
 }

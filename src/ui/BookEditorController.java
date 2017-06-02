@@ -64,10 +64,19 @@ public class BookEditorController implements Initializable{
     
     @FXML
     void prefill_genre_combo(){
-    	System.out.println("Teste");
     	GenreDao gd = new GenreDao();
     	ObservableList<Genre> genres = (ObservableList<Genre>) gd.select();
     	genre_combo.setItems((ObservableList<Genre>) genres);
+    }
+    
+    private void clear(){
+    	this.name_field.setText("");
+    	this.author_field.setText("");
+    	this.isbn_field.setText("");
+    	this.year_field.setText("");
+    	this.edition_field.setText("");
+    	this.page_field.setText("");
+    	this.genre_combo.getSelectionModel().clearSelection();
     }
     
     @FXML
@@ -87,7 +96,7 @@ public class BookEditorController implements Initializable{
     	BookDao bd = new BookDao();
     	bd.insert(book);
     	alert.showAndWait();
-		Platform.exit();
+    	clear();
     }
 
 }

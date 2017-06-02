@@ -30,6 +30,13 @@ public class LibrarianEditorController {
 	@FXML
 	private TextField cpf_field;
 
+	private void clear(){
+		this.name_field.setText("");
+		this.email_field.setText("");
+		this.phone_field.setText("");
+		this.cpf_field.setText("");
+	}
+	
 	@FXML
 	void cancel(ActionEvent event) {
 		((Node) (event.getSource())).getScene().getWindow().hide();
@@ -49,7 +56,7 @@ public class LibrarianEditorController {
 		LibrarianDao ld = new LibrarianDao();
 		ld.insert(librarian);
 		alert.showAndWait();
-		Platform.exit();
+		clear();
 	}
 
 }

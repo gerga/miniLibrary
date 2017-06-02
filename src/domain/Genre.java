@@ -3,6 +3,7 @@ import java.util.UUID;
 
 public class Genre {
 	private UUID id;
+	private int code;
 	private String name;
 	
 	@Override
@@ -27,5 +28,13 @@ public class Genre {
 	}
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public int getCode() {
+		return code;
+	}
+
+	public void setCode(int code) {
+		this.code = code;
 	}
 }

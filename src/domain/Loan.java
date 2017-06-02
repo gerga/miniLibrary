@@ -1,16 +1,22 @@
 package domain;
 
+import java.sql.Date;
 import java.time.LocalDate;
 import java.util.UUID;
 
+import daos.BookDao;
+import daos.LoanBookDao;
+import daos.LoanDao;
 import domain.Book.BookStatus;
+import javafx.collections.ObservableList;
 
 public class Loan {
 	private UUID id;
-	private LocalDate lend_date;
+	private int code;
+	private Date lend_date;
 	private UUID client_id;
 	private UUID employee_id;
-	private LocalDate return_date;
+	private Date return_date;
 	private int status;
 	private LocalDate returned_date;
 	
@@ -28,7 +34,13 @@ public class Loan {
 		}
 	}
 	
-	public Loan(LocalDate lend_date, Client client, Librarian librarian, LocalDate return_date){
+	public Loan(Integer code, Date lend_date, Date return_date){
+		this.code = code;
+		this.lend_date = lend_date;
+		this.return_date = return_date;
+	}
+	
+	public Loan(Date lend_date, Client client, Librarian librarian, Date return_date){
 		this.lend_date = lend_date;
 		this.client_id = client.getId();
 		this.employee_id = librarian.getId();
@@ -44,14 +56,28 @@ public class Loan {
 		else if (book.getStatus() == BookStatus.available.getStatus()){
 			System.out.println("Livro pode ser emprestado");
 			// Create LoanItem
-			new LoanBook(book, this);
+			LoanBook loan_book = new LoanBook(book, this);
+			LoanBookDao lbd = new LoanBookDao();
+			lbd.insert(loan_book);
+			// Change book status
+			book.setStatus(BookStatus.loaned.getStatus());
+			BookDao bd = new BookDao();
+			bd.update_status(book);
 		}
 	}
 	
 	public void return_loan(){
 		System.out.println("Buscar livros com o respectivo id desse empréstimo");
-//		Book.BookStatus = BookStatus.available.getStatus();
-		this.status = LoanStatus.disabled.getStatus();
+		LoanBookDao lbd = new LoanBookDao();
+		ObservableList<Book> loan_books = (ObservableList<Book>) lbd.find_loan_books(this);
+		for (Book book : loan_books){
+			book.setStatus(BookStatus.available.getStatus());
+			BookDao bd = new BookDao();
+			bd.update_status(book);
+			System.out.println(book.getStatus());
+		}
+		LoanDao ld = new LoanDao();
+		ld.return_loan(this);
 	}
 
 	public UUID getId() {
@@ -62,11 +88,11 @@ public class Loan {
 		this.id = id;
 	}
 
-	public LocalDate getLend_date() {
+	public Date getLend_date() {
 		return lend_date;
 	}
 
-	public void setLend_date(LocalDate lend_date) {
+	public void setLend_date(Date lend_date) {
 		this.lend_date = lend_date;
 	}
 
@@ -86,11 +112,11 @@ public class Loan {
 		this.employee_id = employee_id;
 	}
 
-	public LocalDate getReturn_date() {
+	public Date getReturn_date() {
 		return return_date;
 	}
 
-	public void setReturn_date(LocalDate return_date) {
+	public void setReturn_date(Date return_date) {
 		this.return_date = return_date;
 	}
 
@@ -108,6 +134,14 @@ public class Loan {
 
 	public void setReturned_date(LocalDate returned_date) {
 		this.returned_date = returned_date;
+	}
+
+	public int getCode() {
+		return code;
+	}
+
+	public void setCode(int code) {
+		this.code = code;
 	}
 	
 	

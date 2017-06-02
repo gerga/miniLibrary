@@ -1,16 +1,10 @@
 package domain;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.UUID;
 
 public class Book {
 	private UUID id;
+	private int code;
 	private String name;
 	private String author;
 	private String isbn;
@@ -32,6 +26,11 @@ public class Book {
 		public int getStatus(){
 			return status;
 		}
+	}
+	
+	public Book(UUID id, int status){
+		this.id = id;
+		this.status = status;
 	}
 	
 	public Book(String name, String author, String isbn, int year, int edition, int pages, String genre_id, int status){
@@ -138,6 +137,14 @@ public class Book {
 
 	public void setStatus(int status) {
 		this.status = status;
+	}
+
+	public int getCode() {
+		return code;
+	}
+
+	public void setCode(int code) {
+		this.code = code;
 	}
 	
 }

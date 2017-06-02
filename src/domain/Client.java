@@ -4,6 +4,7 @@ import java.util.UUID;
 
 public class Client extends Person{
 	private UUID id;
+	private int code;
 	private UUID person_id;
 	
 	public Client(String name, String email, String phone){
@@ -12,6 +13,11 @@ public class Client extends Person{
 		this.person_id = super.getId();
 	}
 
+	@Override
+	public String toString(){
+		return this.getName();
+	}
+	
 	public UUID getId() {
 		return id;
 	}
@@ -26,5 +32,13 @@ public class Client extends Person{
 
 	public void setPerson_id(UUID person_id) {
 		this.person_id = person_id;
+	}
+
+	public int getCode() {
+		return code;
+	}
+
+	public void setCode(int code) {
+		this.code = code;
 	}
 }

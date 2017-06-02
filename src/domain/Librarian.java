@@ -14,6 +14,11 @@ public class Librarian extends Person{
 		this.person_id = super.getId();
 	}
 
+	@Override
+	public String toString(){
+		return this.getName();
+	}
+	
 	public UUID getId() {
 		return id;
 	}

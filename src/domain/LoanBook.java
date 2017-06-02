@@ -9,6 +9,10 @@ public class LoanBook {
 	private UUID book_id;
 	private UUID loan_id;
 	
+	public LoanBook(UUID book_id){
+		this.book_id = book_id;
+	}
+	
 	public LoanBook(Book book, Loan loan){
 		this.book_id = book.getId();
 		this.loan_id = loan.getId();

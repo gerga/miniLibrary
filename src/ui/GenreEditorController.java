@@ -29,6 +29,10 @@ public class GenreEditorController {
 	@FXML
 	private Button confirm_button;
 
+	private void clear(){
+		this.name_field.setText("");
+	}
+	
 	@FXML
 	void cancel(ActionEvent event) {
 		((Node) (event.getSource())).getScene().getWindow().hide();
@@ -47,6 +51,6 @@ public class GenreEditorController {
 		GenreDao gd = new GenreDao();
 		gd.insert(genre);
 		alert.showAndWait();
-		Platform.exit();
+		clear();
 	}
 }

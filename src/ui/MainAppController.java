@@ -16,6 +16,40 @@ public class MainAppController {
 	void close_app(ActionEvent event) {
 		Platform.exit();
 	}
+	
+	@FXML
+	void search_activated_loans(ActionEvent event){
+		System.out.println("Abrindo Pesquisa de Empréstimos Ativos");
+		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("ReturnLoanSearch.fxml"));
+		Parent editor = null;
+		try {
+			editor = (Parent) fxmlLoader.load();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		Stage stage = new Stage();
+		stage.setTitle("Pesquisa Empréstimos");
+		stage.setScene(new Scene(editor));
+		stage.show();
+	}
+	
+	@FXML
+	void create_loan(ActionEvent event){
+		System.out.println("Abrindo Wizard de Empréstimo");
+		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("LoanWizard.fxml"));
+		Parent editor = null;
+		try {
+			editor = (Parent) fxmlLoader.load();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		Stage stage = new Stage();
+		stage.setTitle("Novo Empréstimo");
+		stage.setScene(new Scene(editor));
+		stage.show();
+	}
 
 	@FXML
 	void open_book_search(ActionEvent event){
@@ -29,7 +63,7 @@ public class MainAppController {
 			e.printStackTrace();
 		}
 		Stage stage = new Stage();
-		stage.setTitle("Client Editor");
+		stage.setTitle("Pesquisa de Livros");
 		stage.setScene(new Scene(editor));
 		stage.show();
 	}
@@ -45,7 +79,7 @@ public class MainAppController {
 			e.printStackTrace();
 		}
 		Stage stage = new Stage();
-		stage.setTitle("Client Editor");
+		stage.setTitle("Editor de Gênero");
 		stage.setScene(new Scene(editor));
 		stage.show();
 	}
