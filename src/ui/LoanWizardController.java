@@ -27,6 +27,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.cell.PropertyValueFactory;
+import lib.AlertLib;
 
 public class LoanWizardController {
 
@@ -98,9 +99,18 @@ public class LoanWizardController {
 		librarian_combo.setItems((ObservableList<Librarian>) librarians);
 	}
 
+	private void create_book_message(){
+		AlertLib a = new AlertLib();
+		a.create_message("Erro", "Precisa selecionar 1 livro antes", AlertType.ERROR);
+	}
+	
 	@FXML
 	void add_book(ActionEvent event) {
 		Book book = book_view.getSelectionModel().getSelectedItem();
+		if (book == null){
+			create_book_message();
+			return;
+		}
 		book_item_view.getItems().add(book);
 		book_view.getItems().remove(book);
 	}
@@ -108,6 +118,10 @@ public class LoanWizardController {
 	@FXML
 	void remove_book(ActionEvent event) {
 		Book book = book_item_view.getSelectionModel().getSelectedItem();
+		if (book == null){
+			create_book_message();
+			return;
+		}
 		book_view.getItems().add(book);
 		book_item_view.getItems().remove(book);
 	}
@@ -123,12 +137,25 @@ public class LoanWizardController {
 		((Node) (event.getSource())).getScene().getWindow().hide();
 	}
 
+	private boolean check_fields(){
+		AlertLib a = new AlertLib();
+		if (this.book_item_view.getItems().isEmpty()){
+			a.create_message("Erro", "É necessário adicionar 1 livro ao empréstimo", AlertType.WARNING);
+			return false;
+		} else if (this.client_combo.getSelectionModel().isEmpty()){
+			a.create_message("Erro", "Necessário selecionar 1 cliente", AlertType.WARNING);
+			return false;
+		} else if (this.librarian_combo.getSelectionModel().isEmpty()){
+			a.create_message("Erro", "Necessário selecionar 1 bibliotecário", AlertType.WARNING);
+			return false;
+		}
+		return true;
+	}
+	
 	@FXML
 	void confirm(ActionEvent event) {
-		Alert alert = new Alert(AlertType.INFORMATION);
-		alert.setTitle("Sucesso");
-		alert.setHeaderText(null);
-		alert.setContentText("Empréstimo criado com sucesso!");
+		if (check_fields() == false)
+			return;
 
 		// DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 		Date lend_date = new Date(Calendar.getInstance().getTimeInMillis());
@@ -143,7 +170,8 @@ public class LoanWizardController {
 		for (Book book : book_item_view.getItems()) {
 			loan.add_book(book);
 		}
-		alert.showAndWait();
+		AlertLib a = new AlertLib();
+		a.create_message("Sucesso", "Empréstimo criado com sucesso", AlertType.INFORMATION);
 		cancel(event);
 	}
 

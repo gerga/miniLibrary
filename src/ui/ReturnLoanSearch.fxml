@@ -36,7 +36,7 @@
                 <TableColumn fx:id="day_table_column" prefWidth="123.0" text="Dia" />
               </columns>
             </TableView>
-            <Button fx:id="select_button" mnemonicParsing="false" onAction="#return_loan" prefHeight="26.0" prefWidth="107.0" text="Devolver" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
+            <Button fx:id="return_button" mnemonicParsing="false" onAction="#return_loan" prefHeight="26.0" prefWidth="107.0" text="Devolver" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
          </children>
       </GridPane>
    </children>

@@ -17,6 +17,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
 import javafx.stage.Stage;
+import lib.AlertLib;
 
 public class GenreEditorController {
 
@@ -29,28 +30,36 @@ public class GenreEditorController {
 	@FXML
 	private Button confirm_button;
 
-	private void clear(){
+	private void clear() {
 		this.name_field.setText("");
 	}
-	
+
 	@FXML
 	void cancel(ActionEvent event) {
 		((Node) (event.getSource())).getScene().getWindow().hide();
 	}
 
+	private boolean check_fields() {
+		if (this.name_field.getText().isEmpty()) {
+			AlertLib a = new AlertLib();
+			a.create_message("Erro", "Nome não pode ser vazio", AlertType.WARNING);
+			return false;
+		}
+		return true;
+	}
+
 	@FXML
 	void confirm(ActionEvent event) {
-		Alert alert = new Alert(AlertType.INFORMATION);
-		alert.setTitle("Sucesso");
-		alert.setHeaderText(null);
-		alert.setContentText("Gênero criado com sucesso!");
+		if (check_fields() == false)
+			return;
 		// Client test
 		System.out.println("=========================");
 		System.out.println("TESTAR GÊNERO");
 		Genre genre = new Genre(this.name_field.getText());
 		GenreDao gd = new GenreDao();
 		gd.insert(genre);
-		alert.showAndWait();
+		AlertLib a = new AlertLib();
+		a.create_message("Sucesso", "Gênero criado com sucesso", AlertType.INFORMATION);
 		clear();
 	}
 }

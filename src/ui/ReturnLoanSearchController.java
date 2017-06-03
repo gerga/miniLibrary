@@ -15,6 +15,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.cell.PropertyValueFactory;
+import lib.AlertLib;
 
 public class ReturnLoanSearchController {
 
@@ -50,13 +51,15 @@ public class ReturnLoanSearchController {
     
     @FXML
     public void return_loan(ActionEvent event){
-    	Alert alert = new Alert(AlertType.INFORMATION);
-    	alert.setTitle("Sucesso");
-    	alert.setHeaderText(null);
-    	alert.setContentText("Empréstimo devolvido com sucesso!");
     	Loan loan = loan_table_view.getSelectionModel().getSelectedItem();
+    	if (loan == null){
+    		AlertLib a = new AlertLib();
+    		a.create_message("Erro", "Precisa selecionar 1 empréstimo", AlertType.ERROR);
+    		return;
+    	}
     	loan.return_loan();
-    	alert.showAndWait();
+    	AlertLib al = new AlertLib();
+    	al.create_message("Sucesso", "Empréstimo devolvido com sucesso", AlertType.INFORMATION);
     	search();
     }
 

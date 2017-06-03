@@ -9,6 +9,7 @@ import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
+import lib.AlertLib;
 import javafx.scene.control.Button;
 
 public class ClientEditorController {
@@ -30,6 +31,21 @@ public class ClientEditorController {
 		this.phone_field.setText("");
 	}
 	
+	private boolean check_fields(){
+		AlertLib a = new AlertLib();
+		if(this.name_field.getText().trim().isEmpty()){
+			a.create_message("Erro", "Campo NOME não pode ser vazio", AlertType.WARNING);
+			return false;
+		} else if (this.email_field.getText().trim().isEmpty()){
+			a.create_message("Erro", "Campo EMAIL não pode ser vazio", AlertType.WARNING);
+			return false;
+		} else if (this.phone_field.getText().trim().isEmpty()){
+			a.create_message("Erro", "Campo TELEFONE não pode ser vazio", AlertType.WARNING);
+			return false;
+		}
+		return true;
+	}
+	
 	@FXML
 	void cancel(ActionEvent event) {
 		((Node) (event.getSource())).getScene().getWindow().hide();
@@ -37,17 +53,16 @@ public class ClientEditorController {
 	
 	@FXML
 	void confirm(ActionEvent event) {
-		Alert alert = new Alert(AlertType.INFORMATION);
-		alert.setTitle("Sucesso");
-		alert.setHeaderText(null);
-		alert.setContentText("Cliente criado com sucesso!");
+		if (check_fields() == false)
+			return;
 		// Client test
 		System.out.println("=========================");
 		System.out.println("CRIANDO CLIENTE");
 		Client client = new Client(this.name_field.getText(), this.email_field.getText(), this.email_field.getText());
 		ClientDao cd = new ClientDao();
 		cd.insert(client);
-		alert.showAndWait();
+		AlertLib a = new AlertLib();
+		a.create_message("Sucesso", "Cliente criado com sucesso", AlertType.INFORMATION);
 		clear();
 	}
 }

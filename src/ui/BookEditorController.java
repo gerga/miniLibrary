@@ -22,6 +22,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
+import lib.AlertLib;
 
 public class BookEditorController implements Initializable{
 	
@@ -57,6 +58,27 @@ public class BookEditorController implements Initializable{
     @FXML
     private Button cancel_button;
     
+    private boolean check_fields() {
+    	AlertLib a = new AlertLib();
+		if (this.name_field.getText().trim().isEmpty()) {
+			a.create_message("Erro", "Nome não pode ser vazio", AlertType.WARNING);
+			return false;
+		}else if (this.author_field.getText().trim().isEmpty()){
+			a.create_message("Erro", "Campo autor precisa ser preenchido", AlertType.WARNING);
+			return false;
+		}else if(this.isbn_field.getText().trim().isEmpty()){
+			a.create_message("Erro", "Campo ISBN precisa ser preenchido", AlertType.WARNING);
+			return false;
+		}else if (this.year_field.getText().trim().isEmpty()){
+			a.create_message("Erro", "Campo ano não pode ser vazio", AlertType.WARNING);
+			return false;
+		}else if (this.genre_combo.getSelectionModel().isEmpty()){
+			a.create_message("Erro", "Gênero não pode ser vazio", AlertType.WARNING);
+			return false;
+		}
+		return true;
+	}
+    
     @FXML
 	void cancel(ActionEvent event) {
 		((Node) (event.getSource())).getScene().getWindow().hide();
@@ -81,10 +103,8 @@ public class BookEditorController implements Initializable{
     
     @FXML
     void confirm(ActionEvent event) {
-    	Alert alert = new Alert(AlertType.INFORMATION);
-    	alert.setTitle("Sucesso");
-    	alert.setHeaderText(null);
-    	alert.setContentText("Livro criado com sucesso!");
+    	if (check_fields() == false)
+    		return;
     	//	Client test
     	System.out.println("=========================");
     	System.out.println("TESTAR LIVRO");
@@ -95,7 +115,8 @@ public class BookEditorController implements Initializable{
     						 genre, BookStatus.available);
     	BookDao bd = new BookDao();
     	bd.insert(book);
-    	alert.showAndWait();
+    	AlertLib a = new AlertLib();
+    	a.create_message("Sucesso", "Livro criado com sucesso", AlertType.INFORMATION);
     	clear();
     }
 

@@ -12,6 +12,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
+import lib.AlertLib;
 
 public class LibrarianEditorController {
 	
@@ -42,12 +43,28 @@ public class LibrarianEditorController {
 		((Node) (event.getSource())).getScene().getWindow().hide();
 	}
 	
+	private boolean check_fields(){
+		AlertLib a = new AlertLib();
+		if (this.name_field.getText().isEmpty()){
+			a.create_message("Erro", "Campo nome não pode ser vazio", AlertType.WARNING);
+			return false;
+		} else if(this.email_field.getText().isEmpty()){
+			a.create_message("Erro", "Campo EMAIL não pode ser vazio", AlertType.WARNING);
+			return false;
+		} else if(this.phone_field.getText().isEmpty()){
+			a.create_message("Erro", "Campo TELEFONE não pode ser vazio", AlertType.WARNING);
+			return false;
+		} else if (this.cpf_field.getText().isEmpty()){
+			a.create_message("Erro", "Campo CPF não pode ser vazio", AlertType.WARNING);
+			return false;
+		}
+		return true;
+	}
+	
 	@FXML
 	void confirm(ActionEvent event) {
-		Alert alert = new Alert(AlertType.INFORMATION);
-		alert.setTitle("Sucesso");
-		alert.setHeaderText(null);
-		alert.setContentText("Bibliotecário criado com sucesso!");
+		if (check_fields() == false)
+			return;
 		// Client test
 		System.out.println("=========================");
 		System.out.println("CRIANDO BIBLIOTECÁRIO");
@@ -55,7 +72,8 @@ public class LibrarianEditorController {
 											this.cpf_field.getText());
 		LibrarianDao ld = new LibrarianDao();
 		ld.insert(librarian);
-		alert.showAndWait();
+		AlertLib a = new AlertLib();
+		a.create_message("Sucesso", "Bibliotecário criado com sucesso", AlertType.INFORMATION);
 		clear();
 	}
 

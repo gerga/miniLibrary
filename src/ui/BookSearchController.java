@@ -1,11 +1,8 @@
 package ui;
 
-import java.net.URL;
-import java.util.ResourceBundle;
 
 import daos.BookDao;
 import domain.Book;
-import domain.Genre;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -57,9 +54,9 @@ public class BookSearchController {
     
     @FXML
     void search(ActionEvent event){
+    	String string_search = this.search_field.getText();
     	BookDao bd = new BookDao();
-    	ObservableList<Book> books = (ObservableList<Book>) bd.find_all();
+    	ObservableList<Book> books = (ObservableList<Book>) bd.find_all(string_search);
     	book_table_view.setItems((ObservableList<Book>) books);
-    	System.out.println(bd.find_all());
     }
 }
