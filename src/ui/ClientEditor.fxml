@@ -18,36 +18,58 @@
           <ColumnConstraints hgrow="SOMETIMES" maxWidth="445.0" minWidth="10.0" prefWidth="442.0" />
         </columnConstraints>
         <rowConstraints>
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Label text="Nome:" GridPane.halignment="RIGHT" />
-            <Label text="Email:" GridPane.halignment="RIGHT" GridPane.rowIndex="1" />
-            <Label text="Telefone:" GridPane.halignment="RIGHT" GridPane.rowIndex="2" />
-            <HBox prefHeight="43.0" prefWidth="438.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
+            <Label text="Nome:" GridPane.halignment="RIGHT" GridPane.rowIndex="1" />
+            <Label text="Email:" GridPane.halignment="RIGHT" GridPane.rowIndex="2" />
+            <Label text="Telefone:" GridPane.halignment="RIGHT" GridPane.rowIndex="3" />
+            <HBox prefHeight="43.0" prefWidth="438.0" GridPane.columnIndex="1" GridPane.rowIndex="4">
                <children>
                   <Button fx:id="cancel_button" mnemonicParsing="false" onAction="#cancel" text="Cancelar" />
                   <Button mnemonicParsing="false" onAction="#confirm" text="Confirmar" />
                </children>
             </HBox>
-            <TextField fx:id="name_field" GridPane.columnIndex="1">
+            <TextField fx:id="name_field" GridPane.columnIndex="1" GridPane.rowIndex="1">
                <GridPane.margin>
                   <Insets left="6.0" right="6.0" />
                </GridPane.margin>
             </TextField>
-            <TextField fx:id="email_field" GridPane.columnIndex="1" GridPane.rowIndex="1">
+            <TextField fx:id="email_field" GridPane.columnIndex="1" GridPane.rowIndex="2">
                <GridPane.margin>
                   <Insets left="6.0" right="6.0" />
                </GridPane.margin>
             </TextField>
-            <TextField fx:id="phone_field" GridPane.columnIndex="1" GridPane.rowIndex="2">
+            <TextField fx:id="phone_field" GridPane.columnIndex="1" GridPane.rowIndex="3">
                <GridPane.margin>
                   <Insets left="6.0" right="6.0" />
                </GridPane.margin>
             </TextField>
+            <Label text="Código:" GridPane.halignment="RIGHT" />
+            <HBox GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+               <children>
+                  <TextField fx:id="code_field">
+                     <HBox.margin>
+                        <Insets left="6.0" right="6.0" />
+                     </HBox.margin>
+                  </TextField>
+                  <Button fx:id="search_button" mnemonicParsing="false" onAction="#search" text="Buscar">
+                     <HBox.margin>
+                        <Insets left="6.0" right="6.0" />
+                     </HBox.margin>
+                  </Button>
+               </children>
+               <GridPane.margin>
+                  <Insets />
+               </GridPane.margin>
+               <padding>
+                  <Insets top="15.0" />
+               </padding>
+            </HBox>
          </children>
       </GridPane>
    </children>

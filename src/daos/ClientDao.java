@@ -7,9 +7,7 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.UUID;
 
-import domain.Book;
 import domain.Client;
-import domain.Genre;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -18,6 +16,26 @@ public class ClientDao {
 	
 	public ClientDao(){
 		this.connection = new ConnectionFactory().getConnection();
+	}
+	
+	public Client find_by_code(String code){
+		String sql = "select person.id, person.name, person.email, person.phone from person inner join client on client.person_id = person.id WHERE client.code = " + code;
+		PreparedStatement ps;
+		try {
+			Client client = null;
+			ps = this.connection.prepareStatement(sql);
+			ResultSet rs = ps.executeQuery();
+			while (rs.next()) {
+				client = new Client(rs.getString("name"), rs.getString("email"), rs.getString("phone"));
+				client.setId(UUID.fromString(rs.getString("id")));
+			}
+			rs.close();
+			ps.close();
+			return client;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
 	
 	public List<Client> find_all(){
@@ -58,6 +76,27 @@ public class ClientDao {
 			ps.setObject(1, client.getId());
 			ps.setObject(2, client.getPerson_id());
 			ps.execute();
+			
+			ps.close();
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	public void update(Client client){
+		String person_sql = "UPDATE person set name = ?, email=?, phone=? WHERE id = (select person_id from client where code = ?)";
+		PreparedStatement ps;
+		try {
+			ps = this.connection.prepareStatement(person_sql);
+			// Use 'setObject' to JDBC recognize UUID type
+			ps.setString(1, client.getName());
+			ps.setString(2, client.getEmail());
+			ps.setString(3, client.getPhone());
+			ps.setObject(4, client.getCode());
+			ps.execute();
+			
 			
 			ps.close();
 			

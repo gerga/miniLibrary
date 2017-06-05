@@ -1,22 +1,15 @@
 package ui;
 
-import java.io.IOException;
-
 import daos.GenreDao;
-import domain.Client;
 import domain.Genre;
-import domain.Person;
-import javafx.application.Platform;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
-import javafx.stage.Stage;
 import lib.AlertLib;
 
 public class GenreEditorController {
@@ -30,8 +23,43 @@ public class GenreEditorController {
 	@FXML
 	private Button confirm_button;
 
+	@FXML
+	private TextField code_field;
+
+	@FXML
+	private Button search_button;
+
+	@FXML
+	public void initialize() {
+		// force the field to be numeric only
+		this.code_field.textProperty().addListener(new ChangeListener<String>() {
+			@Override
+			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+				if (!newValue.matches("\\d*")) {
+					code_field.setText(newValue.replaceAll("[^\\d]", ""));
+				}
+			}
+		});
+	}
+
 	private void clear() {
+		this.code_field.setText("");
 		this.name_field.setText("");
+	}
+
+	@FXML
+	private void search() {
+		if (this.code_field.getText().isEmpty()){
+			AlertLib a = new AlertLib();
+			a.create_message("Erro", "Digite um código antes", AlertType.WARNING);
+			return;
+		}
+		GenreDao gd = new GenreDao();
+		Genre genre = gd.find_by_code(this.code_field.getText());
+		if (genre != null){
+			this.code_field.setEditable(false);
+			this.name_field.setText(genre.getName());
+		}
 	}
 
 	@FXML
@@ -48,18 +76,31 @@ public class GenreEditorController {
 		return true;
 	}
 
-	@FXML
-	void confirm(ActionEvent event) {
-		if (check_fields() == false)
-			return;
-		// Client test
-		System.out.println("=========================");
-		System.out.println("TESTAR GÊNERO");
+	private void insert(){
 		Genre genre = new Genre(this.name_field.getText());
 		GenreDao gd = new GenreDao();
 		gd.insert(genre);
 		AlertLib a = new AlertLib();
-		a.create_message("Sucesso", "Gênero criado com sucesso", AlertType.INFORMATION);
+		a.create_message("Sucesso", "Gênero criado com sucesso", AlertType.INFORMATION);	
+	}
+	
+	private void update(){
+		Genre genre = new Genre(this.name_field.getText());
+		genre.setCode(Integer.parseInt(this.code_field.getText()));
+		GenreDao gd = new GenreDao();
+		gd.update(genre);
+		AlertLib a = new AlertLib();
+		a.create_message("Sucesso", "Gênero atualizado com sucesso", AlertType.INFORMATION);	
+	}
+	
+	@FXML
+	void confirm(ActionEvent event) {
+		if (check_fields() == false)
+			return;
+		if (this.code_field.getText() != "")
+			update();
+		else
+			insert();
 		clear();
 	}
 }

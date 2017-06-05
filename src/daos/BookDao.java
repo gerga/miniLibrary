@@ -8,19 +8,17 @@ import java.util.List;
 import java.util.UUID;
 
 import domain.Book;
-import domain.Book.BookStatus;
-import domain.Genre;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 public class BookDao {
 	Connection connection;
-	
-	public BookDao(){
+
+	public BookDao() {
 		this.connection = new ConnectionFactory().getConnection();
 	}
-	
-	public void update_status(Book book){
+
+	public void update_status(Book book) {
 		String sql = "UPDATE book set status = ? WHERE id = ?";
 		PreparedStatement ps;
 		try {
@@ -35,18 +33,18 @@ public class BookDao {
 			e.printStackTrace();
 		}
 	}
-	
-	public List<Book> find_available(){
+
+	public List<Book> find_available() {
 		String sql = "SELECT * FROM book where status = 0";
 		PreparedStatement ps;
-		try{
+		try {
 			ps = this.connection.prepareStatement(sql);
 			ResultSet rs = ps.executeQuery();
 			ObservableList<Book> books = FXCollections.observableArrayList();
-			while (rs.next()){
+			while (rs.next()) {
 				Book book = new Book(rs.getString("name"), rs.getString("author"), rs.getString("isbn"),
-									 rs.getInt("year"), rs.getInt("edition"), rs.getInt("pages"), rs.getString("genre_id"),
-									 rs.getInt("status"));
+						rs.getInt("year"), rs.getInt("edition"), rs.getInt("pages"), rs.getString("genre_id"),
+						rs.getInt("status"));
 				book.setId(UUID.fromString(rs.getString("id")));
 				books.add(book);
 			}
@@ -58,21 +56,42 @@ public class BookDao {
 		}
 		return null;
 	}
-	
-	public List<Book> find_all(String string_search){
+
+	public Book find_by_code(String code) {
+		String sql = "SELECT * FROM book where code = " + code;
+		PreparedStatement ps;
+		try {
+			Book book = null;
+			ps = this.connection.prepareStatement(sql);
+			ResultSet rs = ps.executeQuery();
+			while (rs.next()) {
+				book = new Book(rs.getString("name"), rs.getString("author"), rs.getString("isbn"), rs.getInt("year"),
+						rs.getInt("edition"), rs.getInt("pages"), rs.getString("genre_id"), rs.getInt("status"));
+				book.setId(UUID.fromString(rs.getString("id")));
+			}
+			rs.close();
+			ps.close();
+			return book;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	public List<Book> find_all(String string_search) {
 		String sql = "SELECT * FROM book";
 		if (!string_search.isEmpty())
 			sql = "SELECT * FROM book WHERE name LIKE '%" + string_search + "%'";
 		PreparedStatement ps;
 		System.out.println(sql);
-		try{
+		try {
 			ps = this.connection.prepareStatement(sql);
 			ResultSet rs = ps.executeQuery();
 			ObservableList<Book> books = FXCollections.observableArrayList();
-			while (rs.next()){
+			while (rs.next()) {
 				Book book = new Book(rs.getString("name"), rs.getString("author"), rs.getString("isbn"),
-									 rs.getInt("year"), rs.getInt("edition"), rs.getInt("pages"), rs.getString("genre_id"),
-									 rs.getInt("status"));
+						rs.getInt("year"), rs.getInt("edition"), rs.getInt("pages"), rs.getString("genre_id"),
+						rs.getInt("status"));
 				books.add(book);
 			}
 			rs.close();
@@ -83,10 +102,32 @@ public class BookDao {
 		}
 		return null;
 	}
-	
-	public void insert(Book book){
-		String sql = ("INSERT INTO book(id, code, name, author, isbn, year, edition, pages, genre_id, status) " + 
-				      "VALUES (?, (SELECT IFNULL(MAX(code), 0) + 1 FROM book), ?, ?, ?, ?, ?, ?, ?, ?)");
+
+	public void update(Book book) {
+		String sql = "UPDATE book set name=?, author=?, isbn=?, year=?, edition=?, pages=?, genre_id=? WHERE code = ?";
+		PreparedStatement ps;
+		try {
+			ps = this.connection.prepareStatement(sql);
+			// Use 'setObject' to JDBC recognize UUID type
+			ps.setString(1, book.getName());
+			ps.setString(2, book.getAuthor());
+			ps.setString(3, book.getIsbn());
+			ps.setInt(4, book.getYear());
+			ps.setInt(5, book.getEdition());
+			ps.setInt(6, book.getPages());
+			ps.setObject(7, book.getGenre_id());
+			ps.setInt(8, book.getCode());
+			ps.execute();
+			ps.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	public void insert(Book book) {
+		String sql = ("INSERT INTO book(id, code, name, author, isbn, year, edition, pages, genre_id, status) "
+				+ "VALUES (?, (SELECT IFNULL(MAX(code), 0) + 1 FROM book), ?, ?, ?, ?, ?, ?, ?, ?)");
 		PreparedStatement ps;
 		try {
 			ps = this.connection.prepareStatement(sql);

@@ -4,6 +4,7 @@ import java.util.UUID;
 
 public class Librarian extends Person{
 	private UUID id;
+	private Integer code;
 	private String cpf;
 	private UUID person_id;
 	
@@ -42,6 +43,13 @@ public class Librarian extends Person{
 	public void setPerson_id(UUID person_id) {
 		this.person_id = person_id;
 	}
-	
+
+	public Integer getCode() {
+		return code;
+	}
+
+	public void setCode(Integer code) {
+		this.code = code;
+	}
 	
 }
