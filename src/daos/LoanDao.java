@@ -7,8 +7,6 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.UUID;
 
-import domain.Book;
-import domain.Genre;
 import domain.Loan;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;

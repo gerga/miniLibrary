@@ -34,6 +34,29 @@ public class BookDao {
 		}
 	}
 
+	public List<Book> find_available_by_name(String name){
+		String sql = "SELECT * FROM book where status = 0 and name LIKE '%" + name + "%'";
+		PreparedStatement ps;
+		try {
+			ps = this.connection.prepareStatement(sql);
+			ResultSet rs = ps.executeQuery();
+			ObservableList<Book> books = FXCollections.observableArrayList();
+			while (rs.next()) {
+				Book book = new Book(rs.getString("name"), rs.getString("author"), rs.getString("isbn"),
+						rs.getInt("year"), rs.getInt("edition"), rs.getInt("pages"), rs.getString("genre_id"),
+						rs.getInt("status"));
+				book.setId(UUID.fromString(rs.getString("id")));
+				books.add(book);
+			}
+			rs.close();
+			ps.close();
+			return books;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
 	public List<Book> find_available() {
 		String sql = "SELECT * FROM book where status = 0";
 		PreparedStatement ps;

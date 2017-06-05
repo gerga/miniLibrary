@@ -27,7 +27,7 @@
             <RowConstraints maxHeight="323.0" minHeight="10.0" prefHeight="66.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <TextField fx:id="search_field" GridPane.columnSpan="2">
+            <TextField fx:id="search_field" onInputMethodTextChanged="#search_by_name" GridPane.columnSpan="2">
                <GridPane.margin>
                   <Insets left="6.0" right="6.0" />
                </GridPane.margin>
@@ -79,6 +79,7 @@
                   <Insets left="6.0" right="6.0" />
                </GridPane.margin>
             </Button>
+            <Button fx:id="cancel_button" mnemonicParsing="false" onAction="#cancel" text="Cancelar" GridPane.columnIndex="1" GridPane.rowIndex="4" />
          </children>
       </GridPane>
    </children>

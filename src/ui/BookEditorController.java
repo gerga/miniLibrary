@@ -26,12 +26,19 @@ public class BookEditorController implements Initializable {
 
 	public void initialize(URL location, ResourceBundle resources) {
 		prefill_genre_combo();
+		setNumberType(this.code_field);
+		setNumberType(this.year_field);
+		setNumberType(this.edition_field);
+		setNumberType(this.page_field);
+	}
+	
+	private void setNumberType(TextField field){
 		// force the field to be numeric only
-		this.code_field.textProperty().addListener(new ChangeListener<String>() {
+		field.textProperty().addListener(new ChangeListener<String>() {
 			@Override
 			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
 				if (!newValue.matches("\\d*")) {
-					code_field.setText(newValue.replaceAll("[^\\d]", ""));
+					field.setText(newValue.replaceAll("[^\\d]", ""));
 				}
 			}
 		});
