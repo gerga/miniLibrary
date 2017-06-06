@@ -10,8 +10,7 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 
-
-<AnchorPane xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.65" fx:controller="ui.ReturnLoanSearchController">
+<AnchorPane xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.ReturnLoanSearchController">
    <children>
       <GridPane layoutX="8.0" layoutY="14.0" prefHeight="346.0" prefWidth="536.0">
         <columnConstraints>
@@ -33,7 +32,8 @@
             <TableView fx:id="loan_table_view" prefHeight="200.0" prefWidth="200.0" GridPane.columnSpan="2" GridPane.rowIndex="1">
               <columns>
                 <TableColumn fx:id="code_table_column" prefWidth="114.0" text="Código" />
-                <TableColumn fx:id="day_table_column" prefWidth="123.0" text="Dia" />
+                <TableColumn fx:id="day_table_column" prefWidth="132.0" text="Dia" />
+                  <TableColumn fx:id="return_date_column" prefWidth="143.0" text="Devoluçao" />
               </columns>
             </TableView>
             <Button fx:id="return_button" mnemonicParsing="false" onAction="#return_loan" prefHeight="26.0" prefWidth="107.0" text="Devolver" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" />

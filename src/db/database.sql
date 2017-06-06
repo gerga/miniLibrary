@@ -1,10 +1,12 @@
 create table genre(
     id blob primary key,
+    code int UNIQUE NOT NULL,
     name text
 );
 
 create table book(
     id blob primary key,
+    code int UNIQUE NOT NULL,
     name varchar(70),
     author varchar(70),
     isbn char(13),
@@ -24,22 +26,24 @@ create table person(
 
 create table client(
     id blob primary key,
+    code int UNIQUE NOT NULL,
     person_id blob references person(id) on update cascade
 );
 
 create table librarian(
     id blob primary key,
-    cpf char(15),
-    role varchar(20),
+    code int NOT NULL UNIQUE,
+    cpf char(15) NOT NULL UNIQUE,
     person_id blob references person(id) on update cascade
 );
 
 create table loan(
     id blob primary key,
-    lend_date date,
+    code int UNIQUE NOT NULL,
+    lend_date date NOT NULL,
     client_id references client(id) on update cascade,
     librarian_id references librarian(id) on update cascade,
-    return_date date,
+    return_date date NOT NULL,
     status int,
     returned_date date
 );

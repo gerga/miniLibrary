@@ -1,14 +1,7 @@
 package lib;
 
 import java.io.IOException;
-import java.time.LocalDate;
 
-import domain.Book;
-import domain.Book.BookStatus;
-import domain.Client;
-import domain.Genre;
-import domain.Librarian;
-import domain.Loan;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;

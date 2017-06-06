@@ -1,15 +1,11 @@
 package ui;
 
-import org.sqlite.SQLiteConfig.SynchronousMode;
 
-import daos.BookDao;
 import daos.LoanDao;
-import domain.Book;
 import domain.Loan;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -30,6 +26,9 @@ public class ReturnLoanSearchController {
 
     @FXML
     private TableColumn<Loan, Integer> day_table_column;
+    
+    @FXML
+    private TableColumn<Loan, String> return_date_column;
 
     @FXML
     private Button return_button;
@@ -38,6 +37,7 @@ public class ReturnLoanSearchController {
     public void initialize(){
     	code_table_column.setCellValueFactory(new PropertyValueFactory<>("code"));
     	day_table_column.setCellValueFactory(new PropertyValueFactory<>("lend_date"));
+    	return_date_column.setCellValueFactory(new PropertyValueFactory<>("return_date"));
     }
     
     @FXML
@@ -47,6 +47,7 @@ public class ReturnLoanSearchController {
 		loan_table_view.setItems((ObservableList<Loan>) loans);
 		code_table_column.setCellValueFactory(new PropertyValueFactory<>("code"));
 		day_table_column.setCellValueFactory(new PropertyValueFactory<>("lend_date"));
+		return_date_column.setCellValueFactory(new PropertyValueFactory<>("return_date"));
     }
     
     @FXML

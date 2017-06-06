@@ -106,7 +106,6 @@ public class BookDao {
 		if (!string_search.isEmpty())
 			sql = "SELECT * FROM book WHERE name LIKE '%" + string_search + "%'";
 		PreparedStatement ps;
-		System.out.println(sql);
 		try {
 			ps = this.connection.prepareStatement(sql);
 			ResultSet rs = ps.executeQuery();

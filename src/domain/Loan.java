@@ -74,7 +74,6 @@ public class Loan {
 			book.setStatus(BookStatus.available.getStatus());
 			BookDao bd = new BookDao();
 			bd.update_status(book);
-			System.out.println(book.getStatus());
 		}
 		LoanDao ld = new LoanDao();
 		ld.return_loan(this);
