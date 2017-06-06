@@ -31,12 +31,12 @@
             <Button fx:id="search_button" mnemonicParsing="false" onAction="#search" text="Pesquisar" GridPane.columnIndex="1" />
             <TableView fx:id="book_table_view" onSort="#search" prefHeight="177.0" prefWidth="502.0" GridPane.columnSpan="2" GridPane.rowIndex="1">
               <columns>
-                <TableColumn fx:id="name_column" prefWidth="75.0" text="Nome" />
-                <TableColumn fx:id="author_column" prefWidth="75.0" text="Autor" />
-                  <TableColumn fx:id="isbn_column" prefWidth="75.0" text="ISBN" />
-                  <TableColumn fx:id="year_column" prefWidth="75.0" text="Ano" />
-                  <TableColumn fx:id="edition_column" prefWidth="75.0" text="Edição" />
-                  <TableColumn fx:id="page_column" prefWidth="75.0" text="Páginas" />
+                <TableColumn fx:id="name_column" editable="false" prefWidth="221.0" sortable="false" text="Nome" />
+                <TableColumn fx:id="author_column" editable="false" prefWidth="132.0" sortable="false" text="Autor" />
+                  <TableColumn fx:id="isbn_column" editable="false" prefWidth="58.0" sortable="false" text="ISBN" />
+                  <TableColumn fx:id="year_column" editable="false" prefWidth="45.0" sortable="false" text="Ano" />
+                  <TableColumn fx:id="edition_column" editable="false" prefWidth="68.0" sortable="false" text="Edição" />
+                  <TableColumn fx:id="page_column" editable="false" prefWidth="73.0" sortable="false" text="Páginas" />
               </columns>
             </TableView>
          </children>

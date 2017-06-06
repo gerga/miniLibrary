@@ -18,6 +18,28 @@ public class ClientDao {
 		this.connection = new ConnectionFactory().getConnection();
 	}
 	
+	public List<Client> find_by_name(String string_search){
+		String sql = "select person.id, person.name, person.email, person.phone, client.code from person inner join client on client.person_id = person.id WHERE person.name LIKE '%" + string_search + "%'";
+		PreparedStatement ps;
+		try {
+			ps = this.connection.prepareStatement(sql);
+			ResultSet rs = ps.executeQuery();
+	        ObservableList<Client> clients = FXCollections.observableArrayList();
+			while (rs.next()) {
+				Client client = new Client(rs.getString("name"), rs.getString("email"), rs.getString("phone"));
+				client.setCode(rs.getInt("code"));
+				client.setId(UUID.fromString(rs.getString("id")));
+				clients.add(client);
+			}
+			rs.close();
+			ps.close();
+			return clients;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
 	public Client find_by_code(String code){
 		String sql = "select person.id, person.name, person.email, person.phone from person inner join client on client.person_id = person.id WHERE client.code = " + code;
 		PreparedStatement ps;

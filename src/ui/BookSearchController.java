@@ -43,7 +43,6 @@ public class BookSearchController {
 
     @FXML
     public void initialize() {
-    	// TODO Auto-generated method stub
     	 name_column.setCellValueFactory(new PropertyValueFactory<>("name"));
     	 author_column.setCellValueFactory(new PropertyValueFactory<>("author"));
     	 isbn_column.setCellValueFactory(new PropertyValueFactory<>("isbn"));

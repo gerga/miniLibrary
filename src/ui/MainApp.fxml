@@ -30,6 +30,8 @@
                 </Menu>
                 <Menu mnemonicParsing="false" text="Pesquisar">
                   <items>
+                        <MenuItem mnemonicParsing="false" onAction="#open_client_search" text="Clientes" />
+                        <MenuItem mnemonicParsing="false" onAction="#open_librarian_search" text="Bibliotecários" />
                     <MenuItem mnemonicParsing="false" onAction="#open_book_search" text="Livros" />
                         <MenuItem mnemonicParsing="false" onAction="#search_activated_loans" text="Empréstimos ativos" />
                   </items>

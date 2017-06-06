@@ -18,6 +18,28 @@ Connection connection;
 		this.connection = new ConnectionFactory().getConnection();
 	}
 	
+	public List<Librarian> find_by_name(String string_search){
+		String sql = "select person.id, person.name, person.email, person.phone, librarian.code, librarian.cpf from person inner join librarian on librarian.person_id = person.id WHERE person.name LIKE '%" + string_search + "%'";
+		PreparedStatement ps;
+		try {
+			ps = this.connection.prepareStatement(sql);
+			ResultSet rs = ps.executeQuery();
+	        ObservableList<Librarian> librarians = FXCollections.observableArrayList();
+			while (rs.next()) {
+				Librarian librarian= new Librarian(rs.getString("name"), rs.getString("email"), rs.getString("phone"), rs.getString("cpf"));
+				librarian.setCode(rs.getInt("code"));
+				librarian.setId(UUID.fromString(rs.getString("id")));
+				librarians.add(librarian);
+			}
+			rs.close();
+			ps.close();
+			return librarians;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
 	public Librarian find_by_code(String code){
 		String sql = "select person.id, person.name, person.email, person.phone, librarian.cpf from person inner join librarian on librarian.person_id = person.id WHERE librarian.code = " + code;
 		PreparedStatement ps;

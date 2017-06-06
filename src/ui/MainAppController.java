@@ -52,6 +52,40 @@ public class MainAppController {
 	}
 
 	@FXML
+	void open_client_search(ActionEvent event){
+		System.out.println("Abrindo Pesquisa de Clientes");
+		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("ClientSearch.fxml"));
+		Parent editor = null;
+		try {
+			editor = (Parent) fxmlLoader.load();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		Stage stage = new Stage();
+		stage.setTitle("Pesquisa de Clientes");
+		stage.setScene(new Scene(editor));
+		stage.show();
+	}
+	
+	@FXML
+	void open_librarian_search(ActionEvent event){
+		System.out.println("Abrindo Pesquisa de Bibliotecários");
+		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("LibrarianSearch.fxml"));
+		Parent editor = null;
+		try {
+			editor = (Parent) fxmlLoader.load();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		Stage stage = new Stage();
+		stage.setTitle("Pesquisa de Bibliotecários");
+		stage.setScene(new Scene(editor));
+		stage.show();
+	}
+	
+	@FXML
 	void open_book_search(ActionEvent event){
 		System.out.println("Abrindo Pesquisa de Livros");
 		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("BookSearch.fxml"));
